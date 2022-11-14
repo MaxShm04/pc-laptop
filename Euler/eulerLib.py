@@ -8,16 +8,16 @@ def properDivisors(x):
 
 
 def sumOfNumArr(x):
-    sum = 0
+    c = 0
     for n in x:
-        sum += n
+        c += n
     #print(sum)
-    return sum
+    return c
 
-def truefalseArrInnumToSum(x):
+def BoolArrToSum(x):
     y = 0
     for n in range(0, len(x)):
-        if x[n]==True:
+        if x[n]==False:
             y += n
     return y
 
