@@ -1,25 +1,21 @@
+import eulerLib as eL
+
 abundant = []
 x = 11
 res = []
-while x < 28123:
+lim = 28123
+while x < lim:
     x += 1
-    # print(x)
+    print(x)
     if eL.sumOfNumArr(eL.properDivisors(x)) > x:
         abundant.append(x)
 print(abundant)
-for x in range(1, 28123):
-    s = False
-    print(x)
-    for n in abundant:
-        if s:
-            break
-        if n < x:
-            for m in abundant:
-                if m < x - n:
-                    if n + m == x:
-                        s = True
-                        break
-    if s == False:
-        res.append(x)
-print(x)
-print(eL.sumOfNumArr(res))
+
+
+expr = [False] * lim
+for n in range(1, lim):
+    for i in range(1, lim):
+        if n + i < lim:
+            expr[n+i] = True
+
+print(eL.truefalseArrInnumToSum(expr))

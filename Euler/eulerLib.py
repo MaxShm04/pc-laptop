@@ -14,4 +14,12 @@ def sumOfNumArr(x):
     #print(sum)
     return sum
 
+def truefalseArrInnumToSum(x):
+    y = 0
+    for n in range(0, len(x)):
+        if x[n]==True:
+            y += n
+    return y
+
+
 
