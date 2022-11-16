@@ -1,9 +1,3 @@
-msg = "Max"
-print(msg)
-msg = "Schmitt"
-print(msg)
-
-
 #print length
 char_cnt = len("Hello world")
 print(char_cnt)
