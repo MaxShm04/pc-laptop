@@ -23,41 +23,56 @@ def BoolArrToSum(x):
     return y
 
 
-def givePeriod(x):
+def givePeriod(x, y):
     if type(x)==float:
         nk = str(x).split(".")[1]
-        print(nk)
+        vk = str(x).split(".")[0]
+        #print(nk)
         period = []
         ind = 0
+        zeros = []
+        rem = []
+        for n in nk:
+            if n!="0":
+                break
+            else:
+                zeros.append(n)
+        """        
+        #print(zeros)
         for n in nk:
             ind +=1
             if n in period:
+                #print("again")
                 rem = period[:period.index(n)]
-                print(rem)
-                period.remove(rem)
+                for r in rem:
+                    #print(F"remove {r}")
+                    period.remove(r)
                 if getFollow(period, nk[ind-1:]):
-                    print("finishing")
-                    return F'({listToString(period)})'
+                    #print("finishing")
+                    if y == 0:
+                        return F'{vk}.{listToString(zeros)}{listToString(rem)}({listToString(period)})'
+                    else:
+                        return len(period)
                 else:
                     period.append(n)
                     period = rem + period
             else:
-                print(F"add {n}")
+                #print(F"add {n}")
                 period.append(n)
-        return False
+        return x"""
     return False
 
 
 def getFollow(liste, strin):
-    print(strin)
+    #print(strin)
     ind = 0
     for s in strin:
         ind += 1
         if ind-1 == len(liste):
-            print(True)
+            #print(True)
             return True
         elif s != liste[strin.index(s)]:
-            print(False)
+            #print(False)
             return False
 
 
@@ -73,3 +88,9 @@ def StringToList(x):
     for n in x:
         out.append(n)
     return out
+
+def emptyList(x):
+    ret = []
+    for n in range(0, x):
+        ret.append(None)
+    return ret
