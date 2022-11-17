@@ -62,20 +62,20 @@ while True:
         posX += 1
         matr[int(posY+add)][int(posX+add)] = n
         #printMatr(matr)
-
+    #printMatr(matr)
 
 # calc diagonals
 amount = 1
 for n in range(0, int((size-1)/2)):
     amount += matr[n][n]
-    print(F"+ {matr[n][n]}")
+    #print(F"+ {matr[n][n]}")
     amount += matr[(-1*n)-1][n]
-    print(F"+ {matr[(-1*n)-1][n]}")
+    #print(F"+ {matr[(-1*n)-1][n]}")
     amount += matr[n][(-1*n)-1]
-    print(F"+ {matr[n][(-1*n)-1]}")
+    #print(F"+ {matr[n][(-1*n)-1]}")
     amount += matr[(-1*n)-1][(-1*n)-1]
-    print(F"+ {matr[(-1*n)-1][(-1*n)-1]}")
-    print("------")
+    #print(F"+ {matr[(-1*n)-1][(-1*n)-1]}")
+    #print("------")
 
 
 
