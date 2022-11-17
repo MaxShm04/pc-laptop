@@ -94,3 +94,14 @@ def emptyList(x):
     for n in range(0, x):
         ret.append(0)
     return ret
+
+
+def resetBoolList(x):
+    ret = [False]*len(x)
+    return ret
+
+def stringToIntList(x):
+    ret = []
+    for n in x:
+        ret.append(int(n))
+    return ret
