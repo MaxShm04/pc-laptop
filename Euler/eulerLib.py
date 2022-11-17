@@ -92,5 +92,5 @@ def StringToList(x):
 def emptyList(x):
     ret = []
     for n in range(0, x):
-        ret.append(None)
+        ret.append(0)
     return ret

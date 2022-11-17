@@ -1,8 +1,11 @@
 import math
-
-
-
 import eulerLib as eL
+
+
+def printMatr(matr):
+    for yL in matr:
+        print(yL)
+    return
 
 matr =[[1]]
 size = 1
@@ -15,15 +18,17 @@ for n in range(2, 10):
     if n > math.pow(size, 2):
         size+=2
         for i in matr:
-            i.insert(0, None)
-            i.append(None)
+            i.insert(0, 0)
+            i.append(0)
         matr.insert(0, eL.emptyList(size))
         matr.append(eL.emptyList(size))
-        print(matr)
+        printMatr(matr)
+        add = (size - 1) / 2
+        print(add)
         posX +=1
-        matr[posY+add[posX+add]]=n
+        matr[int(posY+add)[int(posX+add)]] = n
         dir = "south"
-        print(matr)
+        printMatr(matr)
         continue
     if posX > 0 and abs(posX)*2+1 == size:                 #rechts unten
         if posY < 0 and abs(posY)*2+1 == size:
