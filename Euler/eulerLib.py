@@ -6,6 +6,10 @@ def properDivisors(x):
     # print(ret)
     return ret
 
+def is_even(x):
+    if x % 2 == 0:
+        return True
+    return False
 
 def sumOfNumArr(x):
     c = 0
@@ -105,3 +109,26 @@ def stringToIntList(x):
     for n in x:
         ret.append(int(n))
     return ret
+
+def givePrimes(rang):
+    prim = [2, 3, 5, 7]
+    state = False
+    for n in range(8, rang):
+        for m in range(2, n):
+            if n % m == 0:
+                state = True
+        if not state:
+            prim.append(n)
+        state = False
+    return prim
+
+def isPrim(x):
+    state = False
+    for m in range(2, x):
+        if x % m == 0:
+            state = True
+    if not state:
+        return True
+    return False
+
+
