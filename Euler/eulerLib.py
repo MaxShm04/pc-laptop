@@ -209,10 +209,9 @@ def matrSetRand(data, ran=10):
     return data
 
 def createMatrix(h, l):
-    x = [[]]
+    x = []
     for n in range(0, h):
         for i in range(0, l):
             x[n].append(0)
         x.append([])
-    x = x[:-1]
     return x
