@@ -145,5 +145,50 @@ def isPrim(x):
         return True
     return False
 
+
 def NumbToBin(x, l=8):
     return f'{x:0{l}b}'
+
+
+def isPalindrom(data):
+    if type(data) == int:
+        if is_even(len(str(data))):
+            if split(data)[0] == rotate(split(data)[1]):
+                return True
+            return False
+        else:
+            data = str(data)
+            m = math.ceil(len(data) / 2)
+            deleteMid(data)
+            return data
+    if type(data) == str:
+        return
+    return
+
+
+def split(data):
+    data = str(data)
+    x = len(data)
+    return [data[:x // 2], data[x // 2:x]]
+
+
+def rotate(data):  # rotating number and return list
+    data = str(data)
+    out = []
+    for n in data:
+        out.insert(0, n)
+    return listToString(out)
+
+
+def deleteMid(data):
+    data = str(data)
+    if len(data) % 2 == 1:
+        data[int(math.ceil(len(data) / 2))]
+    return data
+
+def matrToText(x):
+    for m in x:
+        out = "(\t"
+        for e in m:
+            out += F"{e}\t"
+        print(out + ")")
