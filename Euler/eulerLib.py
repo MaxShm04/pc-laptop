@@ -1,4 +1,5 @@
 import math
+import random
 
 
 def properDivisors(x):
@@ -151,19 +152,21 @@ def NumbToBin(x, l=8):
 
 
 def isPalindrom(data):
-    if type(data) == int:
-        if is_even(len(str(data))):
+    if type(data) == str:
+        if is_even(len(data)):
             if split(data)[0] == rotate(split(data)[1]):
                 return True
             return False
         else:
-            data = str(data)
-            m = math.ceil(len(data) / 2)
-            deleteMid(data)
-            return data
-    if type(data) == str:
-        return
-    return
+            data = data
+            data = deleteMid(data)
+            return isPalindrom(data)
+    else:
+        try:
+            return isPalindrom(str(data))
+        except:
+            return ValueError
+
 
 
 def split(data):
@@ -183,12 +186,33 @@ def rotate(data):  # rotating number and return list
 def deleteMid(data):
     data = str(data)
     if len(data) % 2 == 1:
-        data[int(math.ceil(len(data) / 2))]
-    return data
+        x = StringToList(data)
+        del x[math.floor(len(data)/2)]
+        #print(x)
+    return listToString(x)
 
-def matrToText(x):
-    for m in x:
-        out = "(\t"
+
+def matrToText(data):
+    out = ""
+    for m in data:
+        out += "(\t"
         for e in m:
             out += F"{e}\t"
-        print(out + ")")
+        out += ")\n"
+    return out
+
+
+def matrSetRand(data, ran=10):
+    for n in range(0, len(data)):
+        for i in range(0, len(data[n])):
+            data[n][i] = random.randint(0, (ran + 1))
+    return data
+
+def createMatrix(h, l):
+    x = [[]]
+    for n in range(0, h):
+        for i in range(0, l):
+            x[n].append(0)
+        x.append([])
+    x = x[:-1]
+    return x
