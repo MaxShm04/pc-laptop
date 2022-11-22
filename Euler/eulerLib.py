@@ -114,11 +114,12 @@ def givePrimes(rang):
     prim = [2, 3, 5, 7]
     state = False
     for n in range(8, rang):
-        for m in range(2, n):
+        for m in range(2, (n/2)+1):
             if n % m == 0:
                 state = True
         if not state:
             prim.append(n)
+            print(n)
         state = False
     return prim
 
