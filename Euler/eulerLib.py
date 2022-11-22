@@ -1,3 +1,6 @@
+import math
+
+
 def properDivisors(x):
     ret = []
     for n in range(1, x):
@@ -6,10 +9,12 @@ def properDivisors(x):
     # print(ret)
     return ret
 
+
 def is_even(x):
     if x % 2 == 0:
         return True
     return False
+
 
 def sumOfNumArr(x):
     c = 0
@@ -28,16 +33,16 @@ def BoolArrToSum(x):
 
 
 def givePeriod(x, y):
-    if type(x)==float:
+    if type(x) == float:
         nk = str(x).split(".")[1]
         vk = str(x).split(".")[0]
-        #print(nk)
+        # print(nk)
         period = []
         ind = 0
         zeros = []
         rem = []
         for n in nk:
-            if n!="0":
+            if n != "0":
                 break
             else:
                 zeros.append(n)
@@ -68,15 +73,15 @@ def givePeriod(x, y):
 
 
 def getFollow(liste, strin):
-    #print(strin)
+    # print(strin)
     ind = 0
     for s in strin:
         ind += 1
-        if ind-1 == len(liste):
-            #print(True)
+        if ind - 1 == len(liste):
+            # print(True)
             return True
         elif s != liste[strin.index(s)]:
-            #print(False)
+            # print(False)
             return False
 
 
@@ -93,6 +98,7 @@ def StringToList(x):
         out.append(n)
     return out
 
+
 def emptyList(x):
     ret = []
     for n in range(0, x):
@@ -101,8 +107,9 @@ def emptyList(x):
 
 
 def resetBoolList(x):
-    ret = [False]*len(x)
+    ret = [False] * len(x)
     return ret
+
 
 def stringToIntList(x):
     ret = []
@@ -110,18 +117,24 @@ def stringToIntList(x):
         ret.append(int(n))
     return ret
 
+
 def givePrimes(rang):
     prim = [2, 3, 5, 7]
     state = False
+    i = 0
     for n in range(8, rang):
-        for m in range(2, (n/2)+1):
+        for m in range(2, math.floor(n / 2) + 1):
             if n % m == 0:
                 state = True
         if not state:
             prim.append(n)
-            print(n)
+            i += 1
+            if i == 1000:
+                print(n)
+                i = 0
         state = False
     return prim
+
 
 def isPrim(x):
     state = False
@@ -132,4 +145,5 @@ def isPrim(x):
         return True
     return False
 
-
+def NumbToBin(x, l=8):
+    return f'{x:0{l}b}'

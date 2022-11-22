@@ -23,7 +23,7 @@ for n in prim:
     for i in rotations(n):
         if i not in prim:
             state = True
-    if state == False:
+    if not state:
         out.append(n)
     state = False
 
