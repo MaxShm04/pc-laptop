@@ -151,22 +151,20 @@ def NumbToBin(x, l=8):
     return f'{x:0{l}b}'
 
 
-def isPalindrom(data):
-    if type(data) == str:
-        if is_even(len(data)):
+def iPalindrom(data):
+    if type(data) == int:
+        if is_even(len(str(data))):
             if split(data)[0] == rotate(split(data)[1]):
                 return True
             return False
         else:
-            data = data
-            data = deleteMid(data)
-            return isPalindrom(data)
-    else:
-        try:
-            return isPalindrom(str(data))
-        except:
-            return ValueError
-
+            data = str(data)
+            m = math.ceil(len(data) / 2)
+            deleteMid(data)
+            return data
+    if type(data) == str:
+        return
+    return
 
 
 def split(data):
@@ -186,10 +184,8 @@ def rotate(data):  # rotating number and return list
 def deleteMid(data):
     data = str(data)
     if len(data) % 2 == 1:
-        x = StringToList(data)
-        del x[math.floor(len(data)/2)]
-        #print(x)
-    return listToString(x)
+        data[int(math.ceil(len(data) / 2))]
+    return data
 
 
 def matrToText(data):
@@ -205,16 +201,26 @@ def matrToText(data):
 def matrSetRand(data, ran=10):
     for n in range(0, len(data)):
         for i in range(0, len(data[n])):
-            data[n][i] = random.randint(0, (ran + 1))
+            rand = random.randint(0, ran+1)
+            #print(F"{rand}:{n}/{i}")
+            data[n][i] = rand
+            #print(data)
     return data
 
-def createMatrix(h, l):
-    x = []
-    for n in range(0, h):
-        x.append([])
-        for i in range(0, l):
-            x[n].append(0)
 
-    return x
+def createMatrix(h, l):
+    return [[random.randint(0,99) for n in range(l)] for n in range(h)]
+
+
+def isPandigital(numb, digc=9):
+    if len(str(numb))!=digc:
+        return False
+    check = [False] * digc
+    for l in str(numb):
+        if not check[int(l) - 1]:
+            check[int(l) - 1] = True
+        else:
+            return False
+    return True
 
 print(createMatrix(3, 4))
