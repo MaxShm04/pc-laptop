@@ -1,3 +1,5 @@
+from datetime import datetime
+
 time = datetime.now()
 
 x = pow(2, 1000)

@@ -119,23 +119,38 @@ def stringToIntList(x):
     return ret
 
 
-def givePrimes(rang):
+def givePrimes(rang, start=8):
+    if start < 8:
+        start = 8
     prim = [2, 3, 5, 7]
     state = False
     i = 0
-    for n in range(8, rang):
+    for n in range(start, rang):
+        '''if int(str(n)[-1]) % 2 == 0:
+            state = True
+        elif checksum(n) % 3 == 0:
+            state = True
+        elif int(str(n)[-1]) % 5 == 0:
+            state = True'''
+        #else:
         for m in range(2, math.floor(n / 2) + 1):
             if n % m == 0:
                 state = True
+                break
         if not state:
             prim.append(n)
             i += 1
             if i == 1000:
-                print(n)
+                #print(n)
                 i = 0
         state = False
     return prim
 
+def checksum(x):
+    out = 0
+    for n in str(x):
+        out += int(n)
+    return out
 
 def isPrim(x):
     state = False
@@ -201,25 +216,26 @@ def matrToText(data):
 def matrSetRand(data, ran=10):
     for n in range(0, len(data)):
         for i in range(0, len(data[n])):
-            rand = random.randint(0, ran+1)
-            #print(F"{rand}:{n}/{i}")
+            rand = random.randint(0, ran + 1)
+            # print(F"{rand}:{n}/{i}")
             data[n][i] = rand
-            #print(data)
+            # print(data)
     return data
 
 
 def createMatrix(h, l):
-    return [[random.randint(0,99) for n in range(l)] for n in range(h)]
+    return [[random.randint(0, 99) for n in range(l)] for n in range(h)]
 
 
 def isPandigital(numb, digc=9):
-    if len(str(numb))!=digc:
+    if len(str(numb)) != digc:
         return False
     check = [False] * digc
     for l in str(numb):
+        if int(l) > digc or int(l) == 0:
+            return False
         if not check[int(l) - 1]:
             check[int(l) - 1] = True
         else:
             return False
     return True
-
