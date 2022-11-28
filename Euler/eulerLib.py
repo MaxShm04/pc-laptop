@@ -223,4 +223,3 @@ def isPandigital(numb, digc=9):
             return False
     return True
 
-print(createMatrix(3, 4))
