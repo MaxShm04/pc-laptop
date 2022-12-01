@@ -227,15 +227,29 @@ def createMatrix(h, l):
     return [[random.randint(0, 99) for n in range(l)] for n in range(h)]
 
 
-def isPandigital(numb, digc=9):
-    if len(str(numb)) != digc:
+def isPandigital(numb, digc=9, nul=False):
+    if len(str(numb)) != digc and nul == False:
+        return False
+    if len(str(numb)) != digc+1 and nul == True:
         return False
     check = [False] * digc
-    for l in str(numb):
-        if int(l) > digc or int(l) == 0:
-            return False
-        if not check[int(l) - 1]:
-            check[int(l) - 1] = True
-        else:
-            return False
+    if not nul:
+        for l in str(numb):
+            if int(l) > digc or int(l) == 0:
+                return False
+            if not check[int(l) - 1]:
+                check[int(l) - 1] = True
+            else:
+                return False
+    else:
+        check.append(False)
+        for l in str(numb):
+            if int(l) > digc:
+                #print(F"isPandigital false")
+                return False
+            if not check[int(l)]:
+                check[int(l)] = True
+                #print(F"{l}:True")
+            else:
+                return False
     return True
