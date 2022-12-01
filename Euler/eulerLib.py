@@ -1,5 +1,6 @@
 import math
 import random
+from getpass import getpass
 
 
 def properDivisors(x):
@@ -119,38 +120,23 @@ def stringToIntList(x):
     return ret
 
 
-def givePrimes(rang, start=8):
-    if start < 8:
-        start = 8
+def givePrimes(rang):
     prim = [2, 3, 5, 7]
     state = False
     i = 0
-    for n in range(start, rang):
-        '''if int(str(n)[-1]) % 2 == 0:
-            state = True
-        elif checksum(n) % 3 == 0:
-            state = True
-        elif int(str(n)[-1]) % 5 == 0:
-            state = True'''
-        #else:
+    for n in range(8, rang):
         for m in range(2, math.floor(n / 2) + 1):
             if n % m == 0:
                 state = True
-                break
         if not state:
             prim.append(n)
             i += 1
             if i == 1000:
-                #print(n)
+                print(n)
                 i = 0
         state = False
     return prim
 
-def checksum(x):
-    out = 0
-    for n in str(x):
-        out += int(n)
-    return out
 
 def isPrim(x):
     state = False
@@ -166,7 +152,7 @@ def NumbToBin(x, l=8):
     return f'{x:0{l}b}'
 
 
-def iPalindrom(data):
+def isPalindrom(data):
     if type(data) == int:
         if is_even(len(str(data))):
             if split(data)[0] == rotate(split(data)[1]):
@@ -213,43 +199,49 @@ def matrToText(data):
     return out
 
 
-def matrSetRand(data, ran=10):
-    for n in range(0, len(data)):
-        for i in range(0, len(data[n])):
-            rand = random.randint(0, ran + 1)
-            # print(F"{rand}:{n}/{i}")
-            data[n][i] = rand
-            # print(data)
-    return data
+def createMatrix(h, l, ran=10):
+    return [[random.randint(0, ran) for n in range(l)] for n in range(h)]
 
 
-def createMatrix(h, l):
-    return [[random.randint(0, 99) for n in range(l)] for n in range(h)]
+def createMatrix2(h, l):
+    return [[0] * l for n in range(h)]
 
 
-def isPandigital(numb, digc=9, nul=False):
-    if len(str(numb)) != digc and nul == False:
-        return False
-    if len(str(numb)) != digc+1 and nul == True:
-        return False
-    check = [False] * digc
-    if not nul:
-        for l in str(numb):
-            if int(l) > digc or int(l) == 0:
-                return False
-            if not check[int(l) - 1]:
-                check[int(l) - 1] = True
-            else:
-                return False
+def total(numbers):
+    total = 0
+    for n in numbers:
+        total += n
+    return total
+
+
+def mean(numbers):
+    return total(numbers) / len(numbers)
+
+
+def median(numbers):
+    numbers.sort()
+    if len(numbers) % 2:
+        mid = len(numbers) // 2
+        median = numbers[mid]
     else:
-        check.append(False)
-        for l in str(numb):
-            if int(l) > digc:
-                #print(F"isPandigital false")
-                return False
-            if not check[int(l)]:
-                check[int(l)] = True
-                #print(F"{l}:True")
-            else:
-                return False
-    return True
+        mid_right = len(numbers) // 2
+        mid_left = mid_right - 1
+        median = (numbers[mid_right] + numbers[mid_left]) / 2
+    return median
+
+
+def deleteLastLine():
+    print("\033[A                             \033[A")
+
+
+def onQuit():
+    while True:
+        z = getpass(prompt="Do you want to quit [y, n]: ")
+        if z == "y":
+            deleteLastLine()
+            print("Good bye")
+            return True
+        if z == "n":
+            deleteLastLine()
+            return False
+        deleteLastLine()
