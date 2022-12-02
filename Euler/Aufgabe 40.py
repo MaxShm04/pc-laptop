@@ -1,5 +1,3 @@
-import eulerLib as eL
-
 nmb = "0."
 i = 0
 d = 1

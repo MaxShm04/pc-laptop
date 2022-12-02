@@ -1,4 +1,4 @@
-import eulerLib as eL
+from eulerLibrary import eulerLib as eL
 
 prim = eL.givePrimes(1000000)
 

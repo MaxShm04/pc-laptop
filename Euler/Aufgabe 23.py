@@ -1,4 +1,4 @@
-import eulerLib as eL
+from eulerLibrary import eulerLib as eL
 
 abundant = []
 x = 11

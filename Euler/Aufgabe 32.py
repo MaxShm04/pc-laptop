@@ -1,4 +1,5 @@
-import eulerLib as eL
+from eulerLibrary import eulerLib as eL
+
 amount = 0
 stat = 10*[False]
 ges = []

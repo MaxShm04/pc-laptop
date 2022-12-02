@@ -1,6 +1,6 @@
 from datetime import datetime
 
-import eulerLib as eL
+from eulerLibrary import eulerLib as eL
 
 time = datetime.now()
 out = []

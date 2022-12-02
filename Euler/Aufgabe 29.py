@@ -1,7 +1,5 @@
 import math
 
-import eulerLib as eL
-
 ges = []
 
 for a in range(2, 101):

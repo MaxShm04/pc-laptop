@@ -1,5 +1,4 @@
 import math
-import eulerLib as eL
 
 out = []
 c = 0

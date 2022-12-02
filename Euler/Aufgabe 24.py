@@ -1,5 +1,3 @@
-import eulerLib as eL
-
 c = 0
 numbers = [False] * 10
 zif = [False] * 10

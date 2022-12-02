@@ -1,4 +1,5 @@
-import eulerLib as eL
+from eulerLibrary import eulerLib as eL
+
 count = 0
 h = 0
 for n in range(1, 999999999):

@@ -1,5 +1,3 @@
-import eulerLib as eL
-
 pen = []
 penR = []
 out = []

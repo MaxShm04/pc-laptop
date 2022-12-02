@@ -1,5 +1,5 @@
 import math
-import eulerLib as eL
+from eulerLibrary import eulerLib as eL
 
 
 def printMatr(matr):
