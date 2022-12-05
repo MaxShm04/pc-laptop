@@ -1,0 +1,2 @@
+add lib.py to Python Libraries: %User%\AppData\Local\Programs\Python\%PythonVersion%\Lib
+import and pull project duzzelLibrary
