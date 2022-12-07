@@ -15,3 +15,6 @@ for name in text:
     ges += (sum*pos)
     print(pos)
 print(ges)
+
+
+for n in liste == für jedes element n in der liste mache:
