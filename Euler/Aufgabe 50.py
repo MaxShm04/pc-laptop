@@ -6,5 +6,3 @@ import eulerLib as eL
 
 prims = eL.givePrimes(1000, 100)
 for inumb, numb in enumerate(prims):
-
-

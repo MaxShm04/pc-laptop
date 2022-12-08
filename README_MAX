@@ -1,2 +1,2 @@
-add lib.py to Python Libraries: %User%\AppData\Local\Programs\Python\%PythonVersion%\Lib
+add lib_cpy.py to Python Libraries: %User%\AppData\Local\Programs\Python\%PythonVersion%\Lib and rename it to lib.py
 import and pull project duzzelLibrary

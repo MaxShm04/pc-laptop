@@ -1,4 +1,4 @@
-import lib
+import lib_cpy
 
 lib.sync(r'C:\Users\MrXam\PycharmProjects\duzzelLibrary\eulerLib.py')
 import eulerLib as eL
