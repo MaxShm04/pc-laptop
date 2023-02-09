@@ -10,7 +10,7 @@ import eulerLib as eL
 import pyautogui
 import keyboard
 while True:
-    res = pyautogui.locateOnScreen("sc1.png")
+    res = pyautogui.locateOnScreen("gb.png")
     if res is not None:
         for n in range(1, 5):
             time.sleep(n)
