@@ -7,6 +7,8 @@ import eulerLib as eL
 
 
 def main():
+        x = [0, 1, 0]
+
     return
 
 
