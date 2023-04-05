@@ -18,8 +18,8 @@ def main():
         text[i] = strin.split(",")
     check = [[-1 for n in range(0, 80)]for n in range(0, 80)]
     while True:
-        if check[y][x+1] == -1
-    print(text)
+        if check[y][x+1] == -1:
+            print(text)
     print(check)
     return
 
