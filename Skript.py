@@ -83,6 +83,7 @@ def main():
         print(response.json())
     else:
         print('Fehler beim Abrufen der Daten. Status Code:', response.status_code)
+        print(response.json())
 
     call_calendar(token_path, calendar_Id)
 
