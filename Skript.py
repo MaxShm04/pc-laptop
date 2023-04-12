@@ -23,6 +23,7 @@ import pytz
 import requests
 from httplib2 import Http
 
+
 def main():
     token_path = "D:\\Prog\\googleApi\\token.json"
     calendar_Id = "b6e298b82352d3cceadbf543a39c5147bcada63f74a6c9fd013d5769e0ae7507@group.calendar.google.com"
@@ -44,14 +45,16 @@ def main():
         if creds is not None and creds.expired and creds.refresh_token:
             creds.refresh(Request(http))
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(client_secret,SCOPES)  # Ersetzen Sie 'client_secret.json' durch den Pfad zu Ihrer Client-ID und Ihrem Client-Secret
+            flow = InstalledAppFlow.from_client_secrets_file(client_secret,
+                                                             SCOPES)  # Ersetzen Sie 'client_secret.json' durch den Pfad zu Ihrer Client-ID und Ihrem Client-Secret
             creds = flow.run_local_server(port=0)
             creds = flow.run_local_server(access_type='offline')
             # Speichern Sie die Credentials für die zukünftige Verwendung
-            with open('token.pickle', 'wb') as token:   #evtl tab zurück
+            with open('token.pickle', 'wb') as token:  # evtl tab zurück
                 pickle.dump(creds, token)
 
-            creds = Credentials.from_authorized_user_info('token.pickle', SCOPES)  # 'info' enthält die Zugriffsdaten, die Sie in Schritt 1 erhalten haben
+            creds = Credentials.from_authorized_user_info('token.pickle',
+                                                          SCOPES)  # 'info' enthält die Zugriffsdaten, die Sie in Schritt 1 erhalten haben
 
             params = {
                 'client_id': client_id,
@@ -167,5 +170,5 @@ def open_files(summary):
 if __name__ == '__main__':
     # time = datetime.now()
     main()
-    #open_files("Fortgeschrittene Programmierung VS-WWI22C + W3WI_109.2 Algorithmen und Datenstrukturen")
+    # open_files("Fortgeschrittene Programmierung VS-WWI22C + W3WI_109.2 Algorithmen und Datenstrukturen")
 # rint(datetime.now() - time)
