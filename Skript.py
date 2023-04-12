@@ -21,7 +21,7 @@ from googleapiclient.discovery import build
 from datetime import datetime, time, timedelta
 import pytz
 import requests
-
+from httplib2 import Http
 
 def main():
     token_path = "D:\\Prog\\googleApi\\token.json"
@@ -30,7 +30,7 @@ def main():
     client_id = "537588646904-fgbtn9saslu0q5on1rntq7179vau23mv.apps.googleusercontent.com"
     client_secret_id = "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"
     refresh_token_url = 'https://accounts.google.com/o/oauth2/token'
-
+    http = Http()
     # Scopes definieren, z.B. für den Google-Kalender
     SCOPES = ['https://www.googleapis.com/auth/calendar']
 
@@ -42,38 +42,38 @@ def main():
     # Wenn noch keine Credentials existieren oder diese abgelaufen sind, den Autorisierungs-Flow starten
     if not creds or not creds.valid:
         if creds is not None and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
+            creds.refresh(Request(http))
         else:
             flow = InstalledAppFlow.from_client_secrets_file(client_secret,SCOPES)  # Ersetzen Sie 'client_secret.json' durch den Pfad zu Ihrer Client-ID und Ihrem Client-Secret
             creds = flow.run_local_server(port=0)
             creds = flow.run_local_server(access_type='offline')
             # Speichern Sie die Credentials für die zukünftige Verwendung
-            with open('token.pickle', 'wb') as token:
+            with open('token.pickle', 'wb') as token:   #evtl tab zurück
                 pickle.dump(creds, token)
 
-        creds = Credentials.from_authorized_user_info('token.pickle', SCOPES)  # 'info' enthält die Zugriffsdaten, die Sie in Schritt 1 erhalten haben
+            creds = Credentials.from_authorized_user_info('token.pickle', SCOPES)  # 'info' enthält die Zugriffsdaten, die Sie in Schritt 1 erhalten haben
 
-        params = {
-            'client_id': client_id,
-            'client_secret': client_secret_id,
-            'grant_type': 'refresh_token',
-            'refresh_token': creds.refresh_token
-        }
-        response = requests.post(refresh_token_url, data=params)
-        response_data = response.json()
+            params = {
+                'client_id': client_id,
+                'client_secret': client_secret_id,
+                'grant_type': 'refresh_token',
+                'refresh_token': creds.refresh_token
+            }
+            response = requests.post(refresh_token_url, data=params)
+            response_data = response.json()
 
-        if 'refresh_token' in response_data:
-            print('Refresh Token erfolgreich abgerufen:')
-            print(response_data['refresh_token'])
-        else:
-            print('Fehler beim Abrufen des Refresh Tokens:')
-            print(response_data['error'])
+            if 'refresh_token' in response_data:
+                print('Refresh Token erfolgreich abgerufen:')
+                print(response_data['refresh_token'])
+            else:
+                print('Fehler beim Abrufen des Refresh Tokens:')
+                print(response_data['error'])
 
-        # Neue Credentials in JSON-Datei speichern
-        with open('D:\\Prog\\googleApi\\token.json', 'w') as token:
-            token.write(creds.to_json())
+            # Neue Credentials in JSON-Datei speichern
+            with open('D:\\Prog\\googleApi\\token.json', 'w') as token:
+                token.write(creds.to_json())
 
-        refresh_token = response_data['refresh_token']  # Das neue Refresh Token
+            refresh_token = response_data['refresh_token']  # Das neue Refresh Token
     ''' calendar = service.calendars().get(calendarId='537588646904-fgbtn9saslu0q5on1rntq7179vau23mv.apps.googleusercontent.com').execute()
     print(calendar['summary'])'''
 
