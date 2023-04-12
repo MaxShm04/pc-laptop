@@ -93,9 +93,15 @@ def call_calendar(token, calendar_Id):
                     print('This event has not started yet.')
 
                 print("-"*30)
-
+                open_files(event["summary"])
     except HttpError as error:
         print(f'An error occurred: {error}')
+
+def open_files(summary):
+    #file paths:
+    sem_path = "D:\Uni\Sem 2"
+    if os.path.exists()
+
 
 if __name__ == '__main__':
     time = datetime.now()
