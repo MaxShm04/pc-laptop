@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../Python_Hausaufgaben/.idea/Python_Hausaufgaben.iml" filepath="$PROJECT_DIR$/../Python_Hausaufgaben/.idea/Python_Hausaufgaben.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../duzzelLibrary/.idea/duzzelLibrary.iml" filepath="$PROJECT_DIR$/../duzzelLibrary/.idea/duzzelLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/pc-laptop4.iml" filepath="$PROJECT_DIR$/.idea/pc-laptop4.iml" />
+    </modules>
+  </component>
+</project>
