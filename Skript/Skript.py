@@ -23,15 +23,22 @@ import pytz
 import requests
 from httplib2 import Http
 
+
 def main():
+    token_path, calendar_id = start()
+    x = call_calendar(token_path, calendar_id)
+    if x[0] and x[1]:
+        open_files(x)
+    return
+
+def start():
     token_path = "D:\\Prog\\googleApi\\token.json"
-    calendar_Id = "b6e298b82352d3cceadbf543a39c5147bcada63f74a6c9fd013d5769e0ae7507@group.calendar.google.com"
+    calendar_id = "b6e298b82352d3cceadbf543a39c5147bcada63f74a6c9fd013d5769e0ae7507@group.calendar.google.com"
     client_secret = 'D:\Prog\googleApi\client_secret_537588646904-fgbtn9saslu0q5on1rntq7179vau23mv.apps.googleusercontent.com.json'
     client_id = "537588646904-fgbtn9saslu0q5on1rntq7179vau23mv.apps.googleusercontent.com"
     client_secret_id = "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"
     refresh_token_url = 'https://accounts.google.com/o/oauth2/token'
     http = Http()
-    # Scopes definieren, z.B. für den Google-Kalender
     SCOPES = ['https://www.googleapis.com/auth/calendar']
 
     # Credentials-Datei (JSON) einlesen
@@ -43,15 +50,18 @@ def main():
     if not creds or not creds.valid:
         if creds is not None and creds.expired and creds.refresh_token:
             creds.refresh(Request(http))
+            print("Creds refresh request")
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(client_secret,SCOPES)  # Ersetzen Sie 'client_secret.json' durch den Pfad zu Ihrer Client-ID und Ihrem Client-Secret
+            flow = InstalledAppFlow.from_client_secrets_file(client_secret,
+                                                             SCOPES)  # Ersetzen Sie 'client_secret.json' durch den Pfad zu Ihrer Client-ID und Ihrem Client-Secret
             creds = flow.run_local_server(port=0)
             creds = flow.run_local_server(access_type='offline')
             # Speichern Sie die Credentials für die zukünftige Verwendung
-            with open('token.pickle', 'wb') as token:   #evtl tab zurück
+            with open('token.pickle', 'wb') as token:  # evtl tab zurück
                 pickle.dump(creds, token)
 
-            creds = Credentials.from_authorized_user_info('token.pickle', SCOPES)  # 'info' enthält die Zugriffsdaten, die Sie in Schritt 1 erhalten haben
+            creds = Credentials.from_authorized_user_info('token.pickle',
+                                                          SCOPES)  # 'info' enthält die Zugriffsdaten, die Sie in Schritt 1 erhalten haben
 
             params = {
                 'client_id': client_id,
@@ -74,23 +84,20 @@ def main():
                 token.write(creds.to_json())
 
             refresh_token = response_data['refresh_token']  # Das neue Refresh Token
-    ''' calendar = service.calendars().get(calendarId='537588646904-fgbtn9saslu0q5on1rntq7179vau23mv.apps.googleusercontent.com').execute()
-    print(calendar['summary'])'''
-
+    else:
+        print("Creds valid")
+    # Response request to Calendar
     response = requests.get('https://www.googleapis.com/calendar/v3/calendars/calendarId/events')
     if response.status_code == 200:
         print('Anfrage erfolgreich.')
         print(response.json())
     else:
-        print('Fehler beim Abrufen der Daten. Status Code:', response.status_code)
+        print('Fehler beim Abrufen der Daten Calendar. Status Code:', response.status_code)
         print(response.json())
-
-    call_calendar(token_path, calendar_Id)
-
-    return
+    return token_path, calendar_id
 
 
-def call_calendar(token, calendar_Id):
+def call_calendar(token, calendar_id):
     # Set timezone to your local timezone
     local_timezone = pytz.timezone('Europe/Berlin')
 
@@ -106,7 +113,7 @@ def call_calendar(token, calendar_Id):
 
     # Call the Calendar API
     try:
-        events_result = service.events().list(calendarId=calendar_Id, timeMin=now, timeMax=end_time, maxResults=1,
+        events_result = service.events().list(calendarId=calendar_id, timeMin=now, timeMax=end_time, maxResults=1,
                                               singleEvents=True, orderBy='startTime').execute()
         events = events_result.get('items', [])
         if not events:
@@ -124,20 +131,23 @@ def call_calendar(token, calendar_Id):
                 print(f'Start Time (Local Timezone): {start_time_local}')
                 print(f'Summary: {event["summary"]}')
                 # print(f'Location: {event["location"]}')
-                if start_time < datetime.now(pytz.UTC):
+                if start_time < datetime.now(pytz.UTC) + timedelta(minutes=15):
                     print('This event has already started.')
                     if end_time2 < datetime.now(pytz.UTC):
                         print('This event has already ended.')
+                        return False
                     else:
-                        open_files(event["summary"])
+                        #open_files(event["summary"])
+                        return event["summary"], True
                         print('This event has not ended yet.')
                 else:
                     print('This event has not started yet.')
+                    return False, start_time
 
                 print("-" * 30)
     except HttpError as error:
         print(f'An error occurred: {error}')
-
+    return False
 
 def open_files(summary):
     # file paths:
@@ -150,7 +160,8 @@ def open_files(summary):
         "Logik": r"D:\Uni\Sem 2\Logik und Algebra\Logik und Algebra.pdf",
         "Präsentationstechnik": r"D:\Uni\Sem 2\Präsentationstechnik\Geyer_Skript 2023 WI.pdf",
         "Programmierung": r"D:\Uni\Sem 2\Programmieren\01_Intro.pdf",
-        "Systemanalyse": r"D:\Uni\Sem 2\Systemanalyse und -entwurf\Avila de Block_Skript DHBW-VS, 2023, Systemanalyse -entwurf.pdf"
+        "Systemanalyse": r"D:\Uni\Sem 2\Systemanalyse und -entwurf\Avila de Block_Skript DHBW-VS, 2023, Systemanalyse -entwurf.pdf",
+        "wissenschaftlich" : r"D:\Uni\Sem 1\Wiss_Arbeiten\Skript_Wiss_Arbeiten_20222023.pdf"
     }
     for x in paths.values():
         if os.path.exists(x):
@@ -159,13 +170,19 @@ def open_files(summary):
             print(ValueError)
             return
     for x in paths.keys():
-        if x.lower() in summary.lower():
-            os.startfile(paths.get(x))
+        if x.lower() in summary[0].lower():
+            #os.startfile(paths.get(x))
             print("open")
+            return
+        else:
+            print("Skript nicht gefunden")
+
+def get_next_event():
+    return
 
 
 if __name__ == '__main__':
     # time = datetime.now()
     main()
-    #open_files("Fortgeschrittene Programmierung VS-WWI22C + W3WI_109.2 Algorithmen und Datenstrukturen")
-# rint(datetime.now() - time)
+    # open_files("Fortgeschrittene Programmierung VS-WWI22C + W3WI_109.2 Algorithmen und Datenstrukturen")
+    # print(datetime.now() - time)
