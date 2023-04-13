@@ -186,3 +186,6 @@ if __name__ == '__main__':
     main()
     # open_files("Fortgeschrittene Programmierung VS-WWI22C + W3WI_109.2 Algorithmen und Datenstrukturen")
     # print(datetime.now() - time)
+
+
+#last
