@@ -26,8 +26,8 @@ from httplib2 import Http
 
 def main():
     token_path, calendar_id = start()
-    x = call_calendar(token_path, calendar_id)
-    if x[0] and x[1]:
+    x = get_current_event(token_path, calendar_id)
+    if x:
         open_files(x)
     return
 
@@ -97,7 +97,7 @@ def start():
     return token_path, calendar_id
 
 
-def call_calendar(token, calendar_id):
+def get_current_event(token, calendar_id):
     # Set timezone to your local timezone
     local_timezone = pytz.timezone('Europe/Berlin')
 
@@ -138,11 +138,11 @@ def call_calendar(token, calendar_id):
                         return False
                     else:
                         #open_files(event["summary"])
-                        return event["summary"], True
+                        return event["summary"]
                         print('This event has not ended yet.')
                 else:
                     print('This event has not started yet.')
-                    return False, start_time
+                    return False
 
                 print("-" * 30)
     except HttpError as error:
@@ -178,7 +178,56 @@ def open_files(summary):
             print("Skript nicht gefunden")
 
 def get_next_event():
-    return
+    # Set timezone to your local timezone
+    local_timezone = pytz.timezone('Europe/Berlin')
+
+    # Authenticate and build the service
+    creds = Credentials.from_authorized_user_file(token, ['https://www.googleapis.com/auth/calendar'])
+    service = build('calendar', 'v3', credentials=creds)
+
+    # Define start and end time
+    now = datetime.utcnow().isoformat() + 'Z'  # 'Z' indicates UTC time
+    end_time = datetime.utcnow() + timedelta(days=1)
+    end_time = end_time.replace(hour=0, minute=0, second=0, microsecond=0)
+    end_time = end_time.isoformat() + 'Z'
+
+    # Call the Calendar API
+    try:
+        events_result = service.events().list(calendarId=calendar_id, timeMin=now, timeMax=end_time, maxResults=2,
+                                              singleEvents=True, orderBy='startTime').execute()
+        events = events_result.get('items', [])
+        if not events:
+            print('No upcoming events found.')
+        else:
+            print(len(events))
+            for n in range(len(events)):
+                event = events[n - 1]
+                start_time = event['start'].get('dateTime', event['start'].get('date'))
+                end_time2 = event['end'].get('dateTime', event['end'].get('date'))
+                start_time = datetime.fromisoformat(start_time).replace(tzinfo=pytz.UTC)
+                start_time_local = start_time.astimezone(local_timezone)
+                end_time2 = datetime.fromisoformat(end_time2).replace(tzinfo=pytz.UTC)
+                end_time2_local = start_time.astimezone(local_timezone)
+                print(f'Start Time (Local Timezone): {start_time_local}')
+                print(f'Summary: {event["summary"]}')
+                # print(f'Location: {event["location"]}')
+                if start_time < datetime.now(pytz.UTC) + timedelta(minutes=15):
+                    print('This event has already started.')
+                    if end_time2 < datetime.now(pytz.UTC):
+                        print('This event has already ended.')
+                        return False
+                    else:
+                        # open_files(event["summary"])
+                        return event["summary"]
+                        print('This event has not ended yet.')
+                else:
+                    print('This event has not started yet.')
+                    return False
+
+                print("-" * 30)
+    except HttpError as error:
+        print(f'An error occurred: {error}')
+    return False
 
 
 if __name__ == '__main__':
