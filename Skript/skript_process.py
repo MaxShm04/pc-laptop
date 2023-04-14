@@ -38,17 +38,11 @@ if __name__ == '__main__':
             print(wait)
             print(datetime.now(pytz.UTC))
             token_path, calendar_id = Skript.start()
-            x = Skript.call_calendar(token_path, calendar_id)
-            if x[0] and x[1]:
-                Skript.open_files(x)
-            if x[0] and not x[1]:
-                wait = x[1]
-                print(wait)
-                wait = wait.astimezone(local_timezone)
-                print(wait)
+            x = Skript.get_current_event(token_path, calendar_id)
+            wait = Skript.get_next_event(token_path, calendar_id)[1]
         else:
             print("wait")
-        print(f"Wait till {wait}")
+        print(f"Now:{datetime.now(pytz.UTC)} Wait till {wait}")
         time.sleep(5)
 
 #last

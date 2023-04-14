@@ -28,6 +28,7 @@ def main():
     token_path, calendar_id = start()
     x = get_current_event(token_path, calendar_id)
     if x:
+        print("open files")
         open_files(x)
     return
 
@@ -137,7 +138,7 @@ def get_current_event(token, calendar_id):
                         print('This event has already ended.')
                         return False
                     else:
-                        #open_files(event["summary"])
+                        #open_files(event["summary"])   #dont use
                         return event["summary"]
                         print('This event has not ended yet.')
                 else:
@@ -170,14 +171,14 @@ def open_files(summary):
             print(ValueError)
             return
     for x in paths.keys():
-        if x.lower() in summary[0].lower():
-            #os.startfile(paths.get(x))
+        if x.lower() in summary.lower():
+            os.startfile(paths.get(x))
             print("open")
             return
         else:
-            print("Skript nicht gefunden")
+            print(f"{x}:Skript nicht gefunden")
 
-def get_next_event():
+def get_next_event(token, calendar_id):
     # Set timezone to your local timezone
     local_timezone = pytz.timezone('Europe/Berlin')
 
@@ -201,7 +202,7 @@ def get_next_event():
         else:
             print(len(events))
             for n in range(len(events)):
-                event = events[n - 1]
+                event = events[1]
                 start_time = event['start'].get('dateTime', event['start'].get('date'))
                 end_time2 = event['end'].get('dateTime', event['end'].get('date'))
                 start_time = datetime.fromisoformat(start_time).replace(tzinfo=pytz.UTC)
@@ -218,7 +219,7 @@ def get_next_event():
                         return False
                     else:
                         # open_files(event["summary"])
-                        return event["summary"]
+                        return event["summary"], end_time2
                         print('This event has not ended yet.')
                 else:
                     print('This event has not started yet.')
