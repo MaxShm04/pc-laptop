@@ -35,8 +35,7 @@ if __name__ == '__main__':
     while y == True:
         #print("Dies ist der Hauptprozess")
         if wait <= datetime.now(pytz.UTC) + timedelta(minutes=15):
-            print(wait)
-            print(datetime.now(pytz.UTC))
+            print(f"wait = now: start skript\t{datetime.now(pytz.UTC)}")
             token_path, calendar_id = Skript.start()
             x = Skript.get_current_event(token_path, calendar_id)
             wait = Skript.get_next_event(token_path, calendar_id)[1]

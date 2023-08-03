@@ -219,8 +219,9 @@ def get_next_event(token, calendar_id):
                         return False
                     else:
                         # open_files(event["summary"])
-                        return event["summary"], end_time2
+
                         print('This event has not ended yet.')
+                        return event["summary"], end_time2
                 else:
                     print('This event has not started yet.')
                     return False
