@@ -1,12 +1,13 @@
 import math
 
-while (True):
-    print("Bitte alles in Mikrometern eingeben, keine Kommazahlen \nzum Abbruch -1 eingeben \nUm die Maaße zu ändern, -2 eingeben \nStandart: D1 = 131600, D2 25400")
-    i4 = -131600
-    i5 = 25400
+x = True
+i4 = -130319
+i5 = 23389
+while(True):
+    print(f"Bitte alles in Mikrometern eingeben, keine Kommazahlen \nzum Abbruch -1 eingeben \nUm die Maaße zu ändern, -2 eingeben \nAktuell: D1 = {i4*-1}, D2 {i5}")
     i1 = float(input("R1: "))
     if i1 == -1:
-        break
+        exit()
     if i1 == -2:
         i4 = int(input("Distanz1: "))*-1
         i5 = int(input("Distanz2: "))
@@ -37,4 +38,3 @@ while (True):
 
     print(t5/1000)
     print("-"*25)
-

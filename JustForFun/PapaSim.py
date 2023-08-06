@@ -1,12 +1,12 @@
 import math
 import openpyxl
 
-i4 = -131600
-i5 = 25400
+i4 = -130319
+i5 = 23389
 out = []
-for i1 in range(0, 300, 50): #R1
-    for i2 in range(0, 50, 10): #R2
-        for i3 in range(0, 180, 15):
+for i1 in range(0, 350, 50): #R1
+    for i2 in range(0, 60, 10): #R2
+        for i3 in range(0, 195, 15):
             p1 = [i4, i1, 0] #mikrometer
 
 
@@ -29,8 +29,7 @@ for i1 in range(0, 300, 50): #R1
             t5 = t3/t4
 
             print(t5/1000)
-            if t5 < 15 and t5 != 0:
-                out.append([i1, i2, i3, t5])
+            out.append([i1, i2, i3, t5])
             print("-"*25)
 print("-"*25)
 print("-"*25)
@@ -52,4 +51,5 @@ for row_idx, array in enumerate(out, start=2):
         sheet.cell(row=row_idx, column=col_idx, value=value)
 
 # Speichere die Excel-Datei
-workbook.save("output.xlsx")
+str = f"{i4}_{i5}.xlsx"
+workbook.save(str)
