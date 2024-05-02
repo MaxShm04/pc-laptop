@@ -4,8 +4,9 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="Python_Hausaufgaben" />
     <orderEntry type="module" module-name="duzzelLibrary" />
+    <orderEntry type="module" module-name="bank_transaction_unsupervised_clustering" />
+    <orderEntry type="module" module-name="llama3-main" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="renderExternalDocumentation" value="true" />
