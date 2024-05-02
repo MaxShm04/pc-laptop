@@ -5,6 +5,7 @@
       <module fileurl="file://$USER_HOME$/Downloads/2_5258444824041768904/bank_transaction_unsupervised_clustering/.idea/bank_transaction_unsupervised_clustering.iml" filepath="$USER_HOME$/Downloads/2_5258444824041768904/bank_transaction_unsupervised_clustering/.idea/bank_transaction_unsupervised_clustering.iml" />
       <module fileurl="file://$PROJECT_DIR$/../duzzelLibrary/.idea/duzzelLibrary.iml" filepath="$PROJECT_DIR$/../duzzelLibrary/.idea/duzzelLibrary.iml" />
       <module fileurl="file://$USER_HOME$/Downloads/llama3-main/llama3-main/.idea/llama3-main.iml" filepath="$USER_HOME$/Downloads/llama3-main/llama3-main/.idea/llama3-main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ollama/.idea/ollama.iml" filepath="$PROJECT_DIR$/../ollama/.idea/ollama.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/pc-laptop4.iml" filepath="$PROJECT_DIR$/.idea/pc-laptop4.iml" />
     </modules>
   </component>
