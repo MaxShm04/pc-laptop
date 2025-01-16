@@ -1,8 +1,8 @@
 class Item:
     def __init__(self, upc = None, category = None, name = None, price = None ):
         self.upc = upc
-        self.category = category
-        self.name = name
+        self.category = category.upper() if category else None
+        self.name = name.upper() if name else None
         self.price = price
 
     def setUpc(self, upc):
@@ -18,4 +18,4 @@ class Item:
         self.price = price
 
     def toString(self):
-        return(f"UPC: {self.upc}, Category: {self.category}, Name: {self.name}, Price: {self.price:.2f}")
+        return(f"UPC: {self.upc}, Category: {self.category}, Name: {self.name}, Price: ${self.price:.2f}")

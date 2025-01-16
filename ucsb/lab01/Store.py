@@ -1,17 +1,20 @@
-class store:
+class Store:
     def __init__(self):
         self.inventory = {}
 
     def addItem(self, item):
-        category = item.category
+        category = item.category.upper() if item.category else None
+
         if category not in self.inventory:
             self.inventory[category] = []
         self.inventory[category].append(item)
 
     def removeItem(self, item):
-        for i in self.inventory[item.category]:
+        category = item.category.upper() if item.category else None
+
+        for i in self.inventory[category]:
             if i.upc == item.upc:
-                self.inventory[item.category].remove(i)
+                self.inventory[category].remove(i)
                 break
 
     def getItems(self, category):
@@ -26,11 +29,16 @@ class store:
             return
         del self.inventory[category]
 
-    def doesItemsExist(self, item):
-        cat = item.category
-        if item not in self.inventory[cat]:
+    def doesItemExist(self, item):
+        cat = item.category.upper() if item.category else None
+
+        if cat not in self.inventory:
             return False
-        return True
+
+        for i in self.inventory[cat]:
+            if i.upc == item.upc:
+                return True
+        return False
 
     def countDollarItems(self):
         out = 0
