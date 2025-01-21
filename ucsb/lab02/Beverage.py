@@ -25,5 +25,3 @@ class Beverage:
 
     def getInfo(self):
         return f"{self.ounces} oz, ${self.price:.2f}"
-
-'TEST'
