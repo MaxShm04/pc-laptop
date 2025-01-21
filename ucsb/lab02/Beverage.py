@@ -1,13 +1,21 @@
 class Beverage:
     def __init__(self, ounces, price):
-        self.ounces = ounces if ounces >= 0 else TypeError
-        self.price = price if price >= 0 else TypeError
+        if ounces < 0:
+            raise ValueError("Ounces must be a non-negative value.")
+        if price < 0:
+            raise ValueError("Price must be a non-negative value.")
+        self.ounces = ounces
+        self.price = price
 
     def updateOunces(self, newOunces):
-        self.ounces = newOunces if newOunces >= 0 else TypeError
+        if newOunces < 0:
+            raise ValueError("Ounces must be a non-negative value.")
+        self.ounces = newOunces
 
     def updatePrice(self, newPrice):
-        self.price = newPrice if newPrice >= 0 else TypeError
+        if newPrice < 0:
+            raise ValueError("Price must be a non-negative value.")
+        self.price = newPrice
 
     def getPrice(self):
         return self.price

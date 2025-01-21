@@ -17,6 +17,13 @@ def test_beverage_update_methods():
     assert b1.getOunces() == 20
     assert b1.getPrice() == 25.0
 
+def test_beverage_invalid_updates():
+    b1 = Beverage(10, 5.0)
+    with pytest.raises(ValueError):
+        b1.updateOunces(-5)  # Invalid ounces
+    with pytest.raises(ValueError):
+        b1.updatePrice(-10.0)  # Invalid price
+
 def test_beverage_getInfo():
     b1 = Beverage(16, 20.5)
     assert b1.getInfo() == "16 oz, $20.50"
@@ -26,20 +33,28 @@ def test_coffee_initialization():
     c1 = Coffee(8, 3.0, "Espresso")
     assert c1.getOunces() == 8
     assert c1.getPrice() == 3.0
-
-def test_coffee_getInfo():
-    c1 = Coffee(8, 3.0, "Espresso")
     assert c1.getInfo() == "Espresso Coffee, 8 oz, $3.00"
+
+def test_coffee_different_styles():
+    c1 = Coffee(12, 5.5, "Cappuccino")
+    c2 = Coffee(16, 4.0, "Americano")
+    assert c1.getInfo() == "Cappuccino Coffee, 12 oz, $5.50"
+    assert c2.getInfo() == "Americano Coffee, 16 oz, $4.00"
 
 # Tests for FruitJuice class
 def test_fruitjuice_initialization():
     juice = FruitJuice(16, 4.5, ["Apple", "Guava"])
     assert juice.getOunces() == 16
     assert juice.getPrice() == 4.5
-
-def test_fruitjuice_getInfo():
-    juice = FruitJuice(16, 4.5, ["Apple", "Guava"])
     assert juice.getInfo() == "Apple/Guava Juice, 16 oz, $4.50"
+
+def test_fruitjuice_multiple_fruits():
+    juice = FruitJuice(20, 6.0, ["Orange", "Pineapple", "Strawberry"])
+    assert juice.getInfo() == "Orange/Pineapple/Strawberry Juice, 20 oz, $6.00"
+
+def test_fruitjuice_empty_fruits_list():
+    with pytest.raises(ValueError):
+        FruitJuice(16, 4.5, [])  # Invalid: no fruits provided
 
 # Tests for DrinkOrder class
 def test_drinkorder_initialization():
@@ -53,6 +68,15 @@ def test_drinkorder_addBeverage():
     order.addBeverage(c1)
     order.addBeverage(juice)
     assert len(order.drinks) == 2
+
+def test_drinkorder_total_price():
+    c1 = Coffee(8, 3.0, "Espresso")
+    juice = FruitJuice(16, 4.5, ["Apple", "Guava"])
+    order = DrinkOrder()
+    order.addBeverage(c1)
+    order.addBeverage(juice)
+    total_price = sum(bev.getPrice() for bev in order.drinks)
+    assert total_price == 7.5
 
 def test_drinkorder_getTotalOrder():
     c1 = Coffee(8, 3.0, "Espresso")
@@ -74,3 +98,13 @@ def test_drinkorder_empty_order():
         "Total Price: $0.00"
     )
 
+def test_drinkorder_large_order():
+    order = DrinkOrder()
+    for i in range(10):
+        order.addBeverage(Coffee(12, 5.0, "Latte"))
+    assert len(order.drinks) == 10
+    assert order.getTotalOrder() == (
+        "Order Items:\n" +
+        "".join(["* Latte Coffee, 12 oz, $5.00\n" for _ in range(10)]) +
+        "Total Price: $50.00"
+    )
