@@ -1,4 +1,4 @@
-from ucsb.lab02.Beverage import Beverage
+from Beverage import Beverage
 
 
 class FruitJuice(Beverage):

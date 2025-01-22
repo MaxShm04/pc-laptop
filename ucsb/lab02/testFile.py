@@ -4,7 +4,8 @@ from Coffee import Coffee
 from FruitJuice import FruitJuice
 from DrinkOrder import DrinkOrder
 
-# Tests for Beverage class
+
+#Beverage
 def test_beverage_initialization():
     b1 = Beverage(16, 20.5)
     assert b1.getOunces() == 16
@@ -20,15 +21,15 @@ def test_beverage_update_methods():
 def test_beverage_invalid_updates():
     b1 = Beverage(10, 5.0)
     with pytest.raises(ValueError):
-        b1.updateOunces(-5)  # Invalid ounces
+        b1.updateOunces(-5)
     with pytest.raises(ValueError):
-        b1.updatePrice(-10.0)  # Invalid price
+        b1.updatePrice(-10.0)
 
 def test_beverage_getInfo():
     b1 = Beverage(16, 20.5)
     assert b1.getInfo() == "16 oz, $20.50"
 
-# Tests for Coffee class
+#Coffee
 def test_coffee_initialization():
     c1 = Coffee(8, 3.0, "Espresso")
     assert c1.getOunces() == 8
@@ -41,7 +42,7 @@ def test_coffee_different_styles():
     assert c1.getInfo() == "Cappuccino Coffee, 12 oz, $5.50"
     assert c2.getInfo() == "Americano Coffee, 16 oz, $4.00"
 
-# Tests for FruitJuice class
+#FruitJuice
 def test_fruitjuice_initialization():
     juice = FruitJuice(16, 4.5, ["Apple", "Guava"])
     assert juice.getOunces() == 16
@@ -54,9 +55,9 @@ def test_fruitjuice_multiple_fruits():
 
 def test_fruitjuice_empty_fruits_list():
     with pytest.raises(ValueError):
-        FruitJuice(16, 4.5, [])  # Invalid: no fruits provided
+        FruitJuice(16, 4.5, [])
 
-# Tests for DrinkOrder class
+#DrinkOrder
 def test_drinkorder_initialization():
     order = DrinkOrder()
     assert len(order.drinks) == 0
