@@ -1,51 +1,52 @@
-'''
-x = [2,2] * 2
-x = [2,4,6,8][2:4]
-x = not 3 in [1,3,5]
+"""def binarySearch(intList, target):
+    first = 0
+    last = len(intList) -1
+    found = False
+    while first <= last and not found:
+        mid = (first + last) // 2
+        if intList[mid] == target:
+            found = True
+        else:
+            if target < intList[mid]:
+                last = mid - 1
+            else:
+                first = mid + 1
+    return found
 
-x = [5,4,3,2,1].pop()
-x = [5,4,3,2,1].pop(2)
-x = [5,4,3,2,1].index(2)
-#print([5,4,3,2,1].remove(4))
-x = list(range(4))
-x = list(range(-2,4,2))
-x = list(range(10,5,-2))
-x = list(range(2,5))
+def recursiveBinarySearch(intList, target):
+    if len(intList) == 0:
+        return False
+    else:
+        mid = len(intList) // 2
+        if intList[mid] == target:
+            return True
+        else:
+            if target < intList[mid]:
+                return recursiveBinarySearch(intList[:mid], target)
+            else:
+                return recursiveBinarySearch(intList[mid+1:], target)
+"""
 
+class A(Exception):
+	pass
 
-a = "cs9"
-b = "UCSB"
-c = "Python"
+class B(A): # B inherits from A (B IS-A A type)
+	pass
 
-x = c.upper()
-x = b.split("C")
-x = a.find("9")
+class C(Exception):
+	pass
 
-
-
-#print(x)
-
-
-def countOdds(numbers):
-    count = 0
-
-    for num in numbers:
-        if num % 2 != 0:
-            count += 1
-
-    return count
-
-assert countOdds([1,2,3]) == 2
-assert countOdds([]) == 0
-assert countOdds([3,3,5]) == 3
-assert countOdds([2,4,6,7,8,9]) == 2
-
-'''
-
-cs9 = "CS9"
 try:
-    for s in cs9:
-        x = len(cs9) + s
-    print("DONE LOOPING")
-except:
-    print("EXCEPTION CAUGHT")
+	x = int(input("Enter a positive number: "))
+	if x < 0:
+		raise C() # Change this to A() and C() and observe...
+except C:
+	print("Exception of type C caught")
+except A:
+	print("Exception of type A caught")
+except B:
+	print("Exception of type B caught") # Will never get called
+except Exception:
+	print("Exception of type Exception caught")
+
+print("Resuming execution")
