@@ -39,7 +39,7 @@ def solveMaze(maze, startX, startY):
                 stack.push(pos.copy())
                 continue
             else:
-                print("going back")
+                #print("going back")
                 stack.pop()
                 if not stack.isEmpty():
                     pos = stack.peek().copy()
@@ -55,5 +55,5 @@ def printMaze(maze):
         print("|")
     return
 
-solveMaze(maze, 4, 4)
-printMaze(maze)
+#solveMaze(maze, 4, 4)
+#printMaze(maze)
