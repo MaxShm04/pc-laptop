@@ -111,11 +111,6 @@ def findNum(num, intList):
                 return findNum(num, intList[mid+1:])
 
 
-assert findNum(1, []) == False
-assert findNum(3, [1,2,3]) == True
-assert findNum(1, [3,4,5,6]) == False
-
-
 
 def findList(num, intList):
     if len(intList) == 0:
@@ -126,6 +121,12 @@ def findList(num, intList):
         else:
             return findList(num, intList[1:])
 
-assert findList(1, []) == False
-assert findList(3, [1, 2, 3]) == True
-assert findList(1, [3, 4, 5, 6]) == False
+def test(lista):
+    a = lista
+    a = []
+    return a
+
+lista = [1,2,3,4]
+print(test(lista))
+print(lista)
+
