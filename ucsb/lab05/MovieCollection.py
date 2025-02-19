@@ -38,6 +38,6 @@ class MovieCollection:
         result = [x for x in self.head.avgRating(director) if x is not None]
         return round(sum(result) / len(result), 2) if result else None
 
-    def recursiveSearchMovie(self, movie, movieNode):
-        return movieNode.searchMovie(movie)
+    def recursiveSearchMovie(self, movieName, movieNode):
+        return movieNode.searchMovie(movieName)
 
