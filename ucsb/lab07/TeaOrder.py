@@ -11,9 +11,11 @@ class TeaOrder:
         self.teas.append(tea)
 
     def getOrderDescription(self):
+        tea_details = "\n".join([i.getTeaDetails() + "\n----" for i in self.teas])
+
         return (f"******\n"
                 f"Shipping Distance: {self.distance} miles\n"
-                + f"\n".join([i.getTeaDetails() + "\n----" for i in self.teas])
-                + f"\nTOTAL ORDER PRICE: ${sum(i.getPrice() for i in self.teas):.2f}\n"
-                + f"******\n")
+                + (tea_details + "\n" if tea_details else "")  # Avoid extra newline when empty
+                + f"TOTAL ORDER PRICE: ${sum(i.getPrice() for i in self.teas):.2f}\n"
+                + "******\n")
 
