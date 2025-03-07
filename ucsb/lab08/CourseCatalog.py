@@ -1,4 +1,5 @@
 from CourseCatalogNode import CourseCatalogNode
+from Event import Event
 
 
 class CourseCatalog:
@@ -51,7 +52,7 @@ class CourseCatalog:
     def inOrder(self):
         result = []
         self._in_order(self.root, result)
-        return "\n".join(result)
+        return "".join(result)
 
     def _in_order(self, node, result):
         if node is not None:
@@ -62,7 +63,7 @@ class CourseCatalog:
     def preOrder(self):
         result = []
         self._pre_order(self.root, result)
-        return "\n".join(result)
+        return "".join(result)
 
     def _pre_order(self, node, result):
         if node is not None:
@@ -73,7 +74,7 @@ class CourseCatalog:
     def postOrder(self):
         result = []
         self._post_order(self.root, result)
-        return "\n".join(result)
+        return "".join(result)
 
     def _post_order(self, node, result):
         if node is not None:
@@ -87,10 +88,10 @@ class CourseCatalog:
             return ""
         attendable = []
         for section in node.sections:
-            if availableDay == section.day:
+            if availableDay in section.day:
                 if section.time[0] >= availableTime[0] and section.time[1] <= availableTime[1]:
                     attendable.append(str(section))
-        return "\n".join(attendable)
+        return "\n".join(attendable) + "\n" if len(attendable) > 0 else ""
 
     def countCoursesByDepartment(self):
         counts = {}
@@ -103,5 +104,4 @@ class CourseCatalog:
             counts[dept] = counts.get(dept, 0) + 1
             self._count_courses(node.left, counts)
             self._count_courses(node.right, counts)
-
 

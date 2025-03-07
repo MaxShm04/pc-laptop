@@ -17,15 +17,22 @@ def test_course_catalog_node_str():
     lecture = Event("TR", (1100, 1230), "labor 101")
     section1 = Event("M", (1300, 1400), "labor 102")
     section2 = Event("W", (1400, 1500), "labor 103")
+    lecture2 = Event("TR", (1100, 1230), "labor 101")
+    section3 = Event("M", (1300, 1400), "labor 102")
+    section4 = Event("W", (1400, 1500), "labor 103")
     node = CourseCatalogNode("bio", 201, "biologie grundkurs", lecture, [section1, section2])
+    node2 = CourseCatalogNode("bio", 201, "biologie grundkurs", lecture2, [section3, section4])
     expected = (
             "BIO 201: BIOLOGIE GRUNDKURS\n"
             " * Lecture: TR " + Event.format((1100, 1230)) + ", LABOR 101\n"
-                                                             " + Section: M " + Event.format(
-        (1300, 1400)) + ", LABOR 102\n"
-                        " + Section: W " + Event.format((1400, 1500)) + ", LABOR 103"
+            " + Section: M " + Event.format((1300, 1400)) + ", LABOR 102\n"
+            " + Section: W " + Event.format((1400, 1500)) + ", LABOR 103\n"
+            "BIO 201: BIOLOGIE GRUNDKURS\n"
+            " * Lecture: TR " + Event.format((1100, 1230)) + ", LABOR 101\n"
+            " + Section: M " + Event.format((1300, 1400)) + ", LABOR 102\n"
+            " + Section: W " + Event.format((1400, 1500)) + ", LABOR 103\n"
     )
-    assert str(node) == expected
+    assert str(node) + str(node2) == expected
 
 
 def test_add_course_und_duplicates():
@@ -43,7 +50,7 @@ def test_add_section():
     new_section = Event("F", (1100, 1200), "raum y")
     assert cc.addSection("phys", 202, new_section) is True
     result = cc.getAttendableSections("phys", 202, "F", (0, 2359))
-    expected = "F " + Event.format((1100, 1200)) + ", RAUM Y"
+    expected = "F " + Event.format((1100, 1200)) + ", RAUM Y\n"
     assert result == expected
     fake_section = Event("T", (1300, 1400), "raum z")
     assert cc.addSection("phys", 999, fake_section) is False
@@ -93,7 +100,7 @@ def test_get_attendable_sections_edge_cases():
     assert result == ""
 
     result = cc.getAttendableSections("econ", 205, "M", (1000, 1100))
-    expected = "M " + Event.format((1000, 1100)) + ", RAUM B"
+    expected = "M " + Event.format((1000, 1100)) + ", RAUM B\n"
     assert result == expected
 
 
