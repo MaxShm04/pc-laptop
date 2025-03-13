@@ -1,4 +1,3 @@
-# Lab00, CS 9, Maximilian Schmitt
 
 def areElementsInList(list1, list2):
     for elem in list1:
