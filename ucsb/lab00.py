@@ -54,3 +54,5 @@ assert y.get("A") == 2
 assert y.get("P") == 3
 assert y.get(".") == 1
 assert y.get(4) == None
+
+print("x")

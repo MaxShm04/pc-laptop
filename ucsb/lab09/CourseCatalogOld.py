@@ -1,4 +1,4 @@
-from CourseCatalogNode import CourseCatalogNode
+from CourseCatalogNodeOld import CourseCatalogNode
 from Event import Event
 
 
@@ -15,24 +15,28 @@ class CourseCatalog:
             self.size = self.size + 1
             return True
 
-        parent = None
-        current = self.root
-        while current is not None:
-            if new_node == current:
-                return False
-            parent = current
-            if new_node < current:
-                current = current.left
-            else:
-                current = current.right
+        if self._insert(self.root, new_node):
+            self.size += 1
+            return True
+        return False
 
-        if new_node < parent:
-            parent.left = new_node
+    def _insert(self, current_node, new_node):
+        if new_node == current_node:
+            return False
+        elif new_node > current_node:
+            if current_node.hasRightChild():
+                return self._insert(current_node.right, new_node)
+            else:
+                current_node.right = new_node
+                new_node.parent = current_node
+                return True
         else:
-            parent.right = new_node
-        new_node.parent = parent
-        self.size = self.size + 1
-        return True
+            if current_node.hasLeftChild():
+                return self._insert(current_node.left, new_node)
+            else:
+                current_node.left = new_node
+                new_node.parent = current_node
+                return True
 
     def addSection(self, department, courseId, section):
         node = self._search(self.root, department.upper(), courseId)
@@ -115,7 +119,7 @@ class CourseCatalog:
             if res:
                 return res
             return None
-        return False
+        return None
 
     def _get(self, node, key):
         if node == key:
@@ -137,17 +141,36 @@ class CourseCatalog:
         return node
 
     def removeCourse(self, department, courseId):
+        node = self.getNode(department.upper(), courseId)
+        if not node:
+            return False
         if self.size > 1:
-            node = self.getNode(department, courseId)
-            if node:
-                if self._removeCourse(node):
-                    self.size = self.size - 1
+            if node.isRoot():
+                if node.hasBothChildren():
+                    succ = self.succ(node)
+                    succ.spliceOut()
+                    node.replaceNodeData(succ.department,
+                                         succ.courseId,
+                                         succ.courseName,
+                                         succ.lecture,
+                                         succ.sections)
                     return True
                 else:
-                    return False
+                    if node.hasLeftChild():
+                        self.root = node.left
+                        self.root.parent = None
+                    elif node.hasRightChild():
+                        self.root = node.right
+                        self.root.parent = None
+                    else:
+                        self.root = None
+                    return True
             else:
+                if not self._removeCourse(node):
                     return False
-        elif self.size == 1 and (self.root.department == department and self.root.courseId):
+            self.size -= 1
+            return True
+        if self.size == 1 and (self.root.department == department.upper() and self.root.courseId):
             self.root = None
             self.size = self.size -1
             return True
@@ -155,28 +178,23 @@ class CourseCatalog:
             return False
 
     def _removeCourse(self, node):
-        #root case TODO
-        #Case1: no children
-        print(self.size)
         if not node:
-            raise ValueError("No node")
-
+            return False
         if node.isLeaf():
-            print(node.parent)
             if node.isLeftChild():
                 node.parent.left = None
             else:
                 node.parent.right = None
             return True
-
-        #Case 2 2 Child
         elif node.hasBothChildren():
             succ = self.succ(node)
-            self.removeCourse(succ.department, succ.courseId)
-            node.replaceNodeData(succ.department, succ.courseId, succ.courseName, succ.lecture, succ.sections)
+            succ.spliceOut()
+            node.replaceNodeData(succ.department,
+                                 succ.courseId,
+                                 succ.courseName,
+                                 succ.lecture,
+                                 succ.sections)
             return True
-
-        #Case 3 1 Child
         else:
             if node.hasLeftChild():
                 if node.isLeftChild():
@@ -186,13 +204,7 @@ class CourseCatalog:
                     node.left.parent = node.parent
                     node.parent.right = node.left
                 else:
-                    node.replaceNodeData(node.left.department,
-                                         node.left.courseId,
-                                         node.left.courseName,
-                                         node.left.lecture,
-                                         node.left.sections,
-                                         node.left.left,
-                                         node.left.right)
+                    node.replaceNodeData(node.left.department, node.left.courseId, node.left.courseName,node.left.lecture,node.left.sections, node.left.left,node.left.right)
                 return True
             elif node.hasRightChild():
                 if node.isLeftChild():
@@ -202,19 +214,13 @@ class CourseCatalog:
                     node.right.parent = node.parent
                     node.parent.right = node.right
                 else:
-                    node.replaceNodeData(node.right.department,
-                                         node.right.courseId,
-                                         node.right.courseName,
-                                         node.right.lecture,
-                                         node.right.sections,
-                                         node.right.left,
-                                         node.right.right)
+                    node.replaceNodeData(node.right.department,node.right.courseId,node.right.courseName,node.right.lecture,node.right.sections,node.right.left,node.right.right)
                 return True
             else:
-                raise KeyError('No Child')
+                return False
 
     def removeSection(self, department, courseId, section):
-        node = self.getNode(department, courseId)
+        node = self.getNode(department.upper(), courseId)
         if node:
             if section in node.sections:
                 node.sections.remove(section)
@@ -234,13 +240,7 @@ class CourseCatalog:
         return self._visualize(self.root, prefix="", is_left=True)
 
     def _visualize(self, node, prefix, is_left):
-        """
-        Recursive helper for visualize(). Builds a string
-        that represents the subtree rooted at 'node'.
-        'prefix' is the indentation string for the current level.
-        'is_left' indicates whether this node is a left child
-        (affects the ASCII branch characters).
-        """
+
         if node is None:
             return ""
 
@@ -328,5 +328,4 @@ class CourseCatalog:
             result += self._visualizeTopDown(child, new_prefix, child_is_left, child_is_last)
 
         return result
-
 

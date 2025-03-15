@@ -61,7 +61,7 @@ class CourseCatalogNode:
         return s
 
     def __eq__(self, rhs):
-        return True if (self.courseId == rhs.courseId and self.department == rhs.department) else False
+        return self.courseId == rhs.courseId and self.department == rhs.department
 
     def __gt__(self, rhs):
         return True if (self.department > rhs.department or (self.department == rhs.department and self.courseId > rhs.courseId)) else False
@@ -71,3 +71,24 @@ class CourseCatalogNode:
 
     def removeSection(self, section):
         return self.sections.pop(section)
+
+    def spliceOut(self):
+        if self.isLeaf():
+            if self.isLeftChild():
+                self.parent.left = None
+            else:
+                self.parent.right = None
+
+        elif self.hasAnyChildren():
+            if self.hasRightChild():
+                if self.isLeftChild():
+                    self.parent.left = self.right
+                else:
+                    self.parent.right = self.right
+                self.right.parent = self.parent
+            else:
+                if self.isLeftChild():
+                    self.parent.left = self.left
+                else:
+                    self.parent.right = self.left
+                self.left.parent = self.parent

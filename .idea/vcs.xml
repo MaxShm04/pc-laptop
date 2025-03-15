@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
-    <mapping directory="" vcs="Git" />
-    <mapping directory="$USER_HOME$/Downloads/2_5258444824041768904/bank_transaction_unsupervised_clustering" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../duzzelLibrary" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../ollama" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
 </project>
