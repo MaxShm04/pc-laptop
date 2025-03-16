@@ -86,17 +86,43 @@ def selectionSort(list):
             list[max], list[i] = list[i], list[max]
 
 def test_selectionSort():
-	list1 = [1,2,3,4,5,6]
-	list2 = [2,2,2,2,2,2]
-	list3 = []
-	list4 = [6,7,5,3,1]
-	selectionSort(list1)
-	assert list1 == [1,2,3,4,5,6]
-	selectionSort(list2)
-	assert list2 == [2,2,2,2,2,2]
-	selectionSort(list3)
-	assert list3 == []
-	selectionSort(list4)
-	assert list4 == [1,3,5,6,7]
+    list1 = [1,2,3,4,5,6]
+    list2 = [2,2,2,2,2,2]
+    list3 = []
+    list4 = [6,7,5,3,1]
+    selectionSort(list1)
+    assert list1 == [1,2,3,4,5,6]
+    selectionSort(list2)
+    assert list2 == [2,2,2,2,2,2]
+    selectionSort(list3)
+    assert list3 == []
+    selectionSort(list4)
+    assert list4 == [1,3,5,6,7]
 
 
+def insertionSort(alist):
+    for i in range(1, len(alist)):
+
+        currenvalue = alist[i]
+        currentindex = i
+
+        while currentindex > 0 and alist[currentindex-1] > currenvalue:
+            alist[currentindex] = alist[currentindex-1]
+            currentindex -= 1
+
+        alist[currentindex] = currenvalue
+
+
+def test_insertionSort():
+    list1 = [1,2,3,4,5,6]
+    list2 = [2,2,2,2,2,2]
+    list3 = []
+    list4 = [6,7,5,3,1]
+    insertionSort(list1)
+    assert list1 == [1,2,3,4,5,6]
+    insertionSort(list2)
+    assert list2 == [2,2,2,2,2,2]
+    insertionSort(list3)
+    assert list3 == []
+    insertionSort(list4)
+    assert list4 == [1,3,5,6,7]
