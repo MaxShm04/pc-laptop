@@ -1,36 +1,40 @@
+from pkgutil import resolve_name
 
-def mergeSort(alist):
-    if len(alist) > 1:
-        mid = len(alist) // 2
 
-        left = alist[:mid]
-        right = alist[mid:]
+def mergeSort(aList):
+    if len(aList) > 1:
+        mid = len(aList) // 2
 
-        mergeSort(left)
-        mergeSort(right)
+        lefthalf = aList[:mid]
+        righthalf = aList[mid:]
+
+        mergeSort(lefthalf)
+        mergeSort(righthalf)
 
         i = 0
         j = 0
         k = 0
 
-        while i < len(left) and j < len(right):
-            if left[i] <= right[j]:
-                alist[k] = left[i]
+        while i < len(lefthalf) and j < len(righthalf):
+            if lefthalf[i] <= righthalf[j]:
+                aList[k] = lefthalf[i]
                 i += 1
+                k += 1
             else:
-                alist[k] = right[j]
+                aList[k] = righthalf[j]
                 j += 1
-            k += 1
+                k += 1
 
-        while i < len(left):
-            alist[k] = left[i]
+        while i < len(lefthalf):
+            aList[k] = lefthalf[i]
             i += 1
             k += 1
 
-        while j < len(right):
-            alist[k] = right[j]
+        while j < len(righthalf):
+            aList[k] = righthalf[j]
             j += 1
             k += 1
+
 
 
 
@@ -52,12 +56,50 @@ def test_mergeSort():
    assert numList4 == [1,2,3,4,5,6,7,8,9]
    assert numList5 == [1,2,3,4,5,6,7,8,9]
 
-def bubbleSort(list):
-    for i in range(len(list)-1, 0, -1):
-        for n in range(i):
-            if list[n] > list[n+1]:
-                list[n], list[n+1] = list[n+1], list[n]
 
+def quickSort(aList):
+    quickSortHelper(aList, 0, len(aList)-1)
+
+def quickSortHelper(aList, first, last):
+    if first < last:
+        splitpoint = partition(aList, first, last)
+
+        quickSortHelper(aList, first, splitpoint-1)
+        quickSortHelper(aList, splitpoint+1, last)
+
+
+def partition(aList, first, last):
+    pivotvalue = aList[first]
+
+    leftmark = first + 1
+    rightmark = last
+
+    done = False
+
+    while not done:
+        while leftmark <= rightmark and aList[leftmark] < pivotvalue:
+            leftmark += 1
+
+        while leftmark <= rightmark and aList[rightmark] > pivotvalue:
+            rightmark -= 1
+
+        if rightmark < leftmark:
+            done = True
+
+        else:
+            aList[leftmark], aList[rightmark] = aList[rightmark], aList[leftmark]
+
+    return rightmark
+
+
+
+
+
+def bubbleSort(aList):
+    for n in range(len(aList)-1, 0, -1):
+        for i in range(n):
+            if aList[i] > aList[i+1]:
+                aList[i], aList[i+1] = aList[i+1], aList[i]
 
 # Bubble sort pytest
 def test_bubbleSort():
@@ -75,15 +117,15 @@ def test_bubbleSort():
     assert list4 == [1,3,5,6,7]
 
 
-def selectionSort(list):
-    for i in range(len(list)-1, 0, -1):
+def selectionSort(aList):
+    for n in range(len(aList)-1, 0, -1):
         max = 0
-        for n in range(i):
-            if list[n] > list[max]:
-                max = n
+        for i in range(1, n +1):
+            if aList[i] > aList[max]:
+                max = i
+        aList[n], aList[max] = aList[max], aList[n]
 
-        if list[max] > list[i]:
-            list[max], list[i] = list[i], list[max]
+
 
 def test_selectionSort():
     list1 = [1,2,3,4,5,6]
@@ -100,18 +142,17 @@ def test_selectionSort():
     assert list4 == [1,3,5,6,7]
 
 
-def insertionSort(alist):
-    for i in range(1, len(alist)):
+def insertionSort(aList):
+    for n in range(1, len(aList)):
 
-        currenvalue = alist[i]
-        currentindex = i
+        value = aList[n]
+        position = n
 
-        while currentindex > 0 and alist[currentindex-1] > currenvalue:
-            alist[currentindex] = alist[currentindex-1]
-            currentindex -= 1
+        while n > 0 and aList[position -1 ] > aList[position]:
+            aList[position] = aList[position -1]
+            position -= 1
 
-        alist[currentindex] = currenvalue
-
+        aList[position] = value
 
 def test_insertionSort():
     list1 = [1,2,3,4,5,6]
@@ -296,3 +337,5 @@ def test_collectEvens():
     ll.addToFront(3)
     ll.addToFront(4)
     assert ll.collectEvens(ll.head) == [4,2,6]
+
+
