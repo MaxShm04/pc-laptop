@@ -1,37 +1,39 @@
 
-#nicht gelöst
 
-
-sum = 0
-ones = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
-        "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", ""]
-tens = ["", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety", ""]
-for n in range(1000):
-    if n == 0:
-        print()
-    elif n < 20:
-        sum += len(ones[n-1])
-        print(F'num {n}, add {len(ones[n-1])}')
-    elif n < 100:
-        s = str(n)
-        sum += len(tens[int(s[0])-1])
-        sum += len(ones[int(s[1])-1])
-        print(F'num {n}, add {len(ones[int(s[1])-1])} + {len(tens[int(s[0])-1])}')
-    else:
-        s = str(n)
+t = 0
+sum = 11
+ones = [3, 3, 5, 4, 4, 3, 5, 5, 4, 3] #one two three four five six seven eight nine ten
+tentwenty = ["", 6, 6, 8, 8, 7, 7, 9, 8, 8] #11-19 eleven
+tens = [6, 6, 5, 5, 5, 7, 6, 6] #20-90 in tens
+for i in range(1,1000):
+    print(f"T: {t}")
+    t = 0
+    print(i)
+    if i >= 100:
+        sum += ones[(i // 100)-1]
+        t += ones[(i // 100)-1]
+        t += 7
         sum += 7
-        sum += len(ones[int(s[0]) - 1])
-        print(F'num {n}, add {len(ones[int(s[0]) - 1])}')
-        if int(s[1]) != 0 or int(s[2] != 0):
-            sum += 3
-            print(F'num {n}, add 3')
-        if 20 > n - int(s[0]) > 0:
-            sum += len(ones[n-int(s[0])]-1)
-            print(F'num {n}, add {len(ones[n-int(s[0])]-1)}')
+        i -= (i//100)*100
+        if (i%100) == 0:
+            continue
         else:
-            sum += len(tens[int(s[1]) - 1])
-            sum += len(ones[int(s[2]) -1])
-            print(F'num {n}, add {len(tens[int(s[1]) - 1])} + {len(ones[int(s[2]) -1])}')
+            sum += 3
+            t += 3
+    if i >= 20:
+        sum += tens[(i//10)-2]
+        t += tens[(i//10)-2]
+        if (i%10) == 0:
+            continue
+    elif 10 < i < 20:
+        sum += tentwenty[i - 10]
+        t += tentwenty[i - 10]
+        continue
+    sum += ones[(i%10)-1]
+    t += ones[(i%10)-1]
+#nine hundred and ninty eight
+#4 7 3 5 5
+
+print(sum)
 
 
-print(sum  + 11)
