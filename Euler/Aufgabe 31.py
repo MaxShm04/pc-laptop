@@ -1,22 +1,32 @@
+l = [1, 2, 5, 10 , 20, 50, 100, 200]
+goal =[]
+max = 200
+count = 0
 
-pos = []
+def lower(ma, ind):
+    for i in range(0, ind):
+        for x in range(0, int(200 / l[i])):  # for each max amount of coins of index
+            m = max
+            m -= l[i]
+            if m <= 0:
+                count += 1
+                continue
+            else:
+                lower(m, i)
 
-maxP = 200
-c = 0
-for n in range(0, int(maxP+1)):
-    for m in range(0, int((maxP/2)+1)):
-        for b in range(0, int((maxP / 5) + 1)):
-            for v in range(0, int((maxP / 10) + 1)):
-                for c in range(0, int((maxP / 20) + 1)):
-                    for x in range(0, int((maxP / 50) + 1)):
-                        for y in range(0, int((maxP / 100) + 1)):
-                            for g in range(0, int((maxP / 200) + 1)):
-                                amount = n*1 + m*2 + b*5 + v*10 + c*20 + x*50+ y*100+ g*200
-                                if amount == 200:
-                                    c += 1
-                                    pos.append([n, m, b, v, c, x, y, g])
-                                    if(c==10):
-                                        c=0
-                                        print([n, m, b, v, c, x, y, g])
-print(pos)
-print(len(pos))
+if __name__ == '__main__':
+    count = 0
+    for i in range(0, len(l)):  # for each index in l
+        for x in range(0, int(200 / l[i])):  # for each max amount of coins of index
+            m = max
+            m -= l[i]
+            if m <= 0:
+                count += 1
+                continue
+            else:
+                lower(m, i, count)
+
+
+
+
+
